@@ -1,0 +1,306 @@
+﻿/* ==========================================================================
+   RAKSHA-SETU 360 (सुरक्षा सेतु) - Expanded Tactical HUD & UI Design System
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap');
+
+:root {
+  --bg-primary: #070b14;
+  --bg-secondary: #0d1527;
+  --bg-card: rgba(15, 23, 42, 0.85);
+  --bg-card-hover: rgba(30, 41, 59, 0.9);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-accent: rgba(56, 189, 248, 0.3);
+  
+  --accent-cyan: #06b6d4;
+  --accent-blue: #3b82f6;
+  --accent-emerald: #10b981;
+  --accent-amber: #f59e0b;
+  --accent-rose: #f43f5e;
+  --accent-purple: #8b5cf6;
+
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-devanagari: 'Noto Sans Devanagari', 'Inter', sans-serif;
+}
+
+/* Day Mode Variables */
+.theme-day {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #f1f5f9;
+  --bg-card: rgba(255, 255, 255, 0.95);
+  --bg-card-hover: #ffffff;
+  --border-subtle: rgba(0, 0, 0, 0.1);
+  --border-accent: rgba(2, 132, 199, 0.4);
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+}
+
+/* High-Contrast Neon Emergency HUD */
+.theme-neon {
+  --bg-primary: #000000;
+  --bg-secondary: #050505;
+  --bg-card: rgba(10, 10, 10, 0.95);
+  --border-subtle: rgba(0, 255, 234, 0.3);
+  --border-accent: #00ffea;
+  --text-primary: #ffffff;
+  --text-secondary: #00ffea;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.font-mono-code {
+  font-family: var(--font-mono);
+}
+
+.font-hindi {
+  font-family: var(--font-devanagari);
+}
+
+/* Glassmorphism Classes */
+.glass-panel {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+}
+
+.glass-panel-subtle {
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-subtle);
+}
+
+.glass-panel-alert {
+  background: rgba(244, 63, 94, 0.12);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(244, 63, 94, 0.4);
+}
+
+.glass-panel-emerald {
+  background: rgba(16, 185, 129, 0.12);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.glass-panel-amber {
+  background: rgba(245, 158, 11, 0.12);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+/* Tactical Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(8, 12, 22, 0.7);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(56, 189, 248, 0.25);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(56, 189, 248, 0.5);
+}
+
+/* Animations */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(244, 63, 94, 0.4), inset 0 0 15px rgba(244, 63, 94, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(244, 63, 94, 0.8), inset 0 0 25px rgba(244, 63, 94, 0.5);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2s infinite ease-in-out;
+}
+
+@keyframes radarSweep {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-radar-sweep {
+  animation: radarSweep 3s linear infinite;
+  transform-origin: center center;
+}
+
+@keyframes scanline {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(800%);
+  }
+}
+
+.scan-beam {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, #06b6d4, transparent);
+  box-shadow: 0 0 15px #06b6d4;
+  animation: scanline 3s linear infinite;
+  z-index: 25;
+}
+
+/* Leaflet Container Tactical Styling */
+.leaflet-container {
+  background-color: #070b14 !important;
+  font-family: var(--font-sans) !important;
+}
+
+.custom-tactical-pin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.custom-tactical-pin:hover {
+  transform: scale(1.25);
+  z-index: 9999 !important;
+}
+
+.leaflet-popup-content-wrapper {
+  background: rgba(13, 21, 39, 0.95) !important;
+  color: #f8fafc !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(56, 189, 248, 0.3) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6) !important;
+}
+
+.leaflet-popup-tip {
+  background: rgba(13, 21, 39, 0.95) !important;
+}
+
+/* Smartphone Mockup Chassis */
+.phone-mockup-chassis {
+  width: 100%;
+  max-width: 380px;
+  min-height: 740px;
+  background: #020617;
+  border: 10px solid #1e293b;
+  border-radius: 46px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.dynamic-island {
+  width: 110px;
+  height: 26px;
+  background: #000;
+  border-radius: 20px;
+  margin: 10px auto 4px auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  z-index: 50;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+/* Push-to-Talk (PTT) Walkie Talkie Chassis */
+.ptt-chassis {
+  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+  border: 3px solid #334155;
+  border-radius: 24px;
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.1), 0 10px 30px rgba(0, 0, 0, 0.8);
+}
+
+.ptt-speaker-grille {
+  background-image: radial-gradient(#0f172a 25%, transparent 25%);
+  background-size: 8px 8px;
+}
+
+/* Watermark Overlay for Volunteer Photos */
+.volunteer-watermark-overlay {
+  position: relative;
+  overflow: hidden;
+}
+
+.volunteer-watermark-overlay::after {
+  content: "AUTHORIZED POLICE DISPATCH ONLY • DO NOT SHARE ON SOCIAL MEDIA • CONTROL ROOM DEEKSHABHOOMI";
+  position: absolute;
+  top: 50%;
+  left: -25%;
+  width: 150%;
+  text-align: center;
+  transform: rotate(-30deg) translateY(-50%);
+  background: rgba(244, 63, 94, 0.5);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  padding: 4px 0;
+  pointer-events: none;
+  text-transform: uppercase;
+  z-index: 10;
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+}
+
+/* Printable Emergency QR Safety Card */
+.emergency-qr-card {
+  width: 100%;
+  max-width: 360px;
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+  border: 2px solid rgba(56, 189, 248, 0.4);
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+  padding: 16px;
+  position: relative;
+}
+
+/* Audio Waveform Bars */
+@keyframes waveAnimation {
+  0%, 100% { height: 6px; }
+  50% { height: 28px; }
+}
+
+.waveform-bar {
+  width: 3px;
+  background: #06b6d4;
+  border-radius: 2px;
+  animation: waveAnimation 1.2s ease-in-out infinite;
+}
+.waveform-bar:nth-child(2) { animation-delay: 0.1s; }
+.waveform-bar:nth-child(3) { animation-delay: 0.2s; }
+.waveform-bar:nth-child(4) { animation-delay: 0.3s; }
+.waveform-bar:nth-child(5) { animation-delay: 0.4s; }
+.waveform-bar:nth-child(6) { animation-delay: 0.5s; }
+.waveform-bar:nth-child(7) { animation-delay: 0.6s; }
+.waveform-bar:nth-child(8) { animation-delay: 0.7s; }
